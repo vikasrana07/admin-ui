@@ -1,0 +1,5 @@
+<div *ngIf="message" [ngClass]="message.cssClass">
+    <a class="close" (click)="removeAlert()">&times;</a>
+    <span [innerHTML]="message.text"></span>
+</div>
+
