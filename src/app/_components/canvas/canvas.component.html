@@ -1,0 +1,8 @@
+<div class="dd_wrapper">
+	<div id="canvas" class="dd_area">
+		<app-element [endpoint] = "endpoint" *ngFor="let endpoint of endpoints" (dragEndOuter)="onDragEndOuter($event)" (dragMoveInner)="onDragMovedInner($event)" (dragEndInner)="onDragEndInner($event)" ></app-element>
+		<svg style="width:100%;height:100%;">
+			<line [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" stroke="#00baff" stroke-width="2"></line>
+		</svg>
+   </div>
+</div>

@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { NgxEchartsModule } from 'ngx-echarts';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -26,31 +27,48 @@ import { AlertComponent } from './_components';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor, ErrorInterceptor } from './_helpers';
 import { NotFoundComponent } from './notfound/notfound.component';
+import { CounterComponent } from './widget/counter/counter.component';
+import { NetworkComponent } from './network/network.component';
+import { CanvasComponent } from './_components/canvas/canvas.component';
+import { ElementComponent } from './_components/canvas/element/element.component';
 
 @NgModule({
-  imports:      [
+  imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
+    DragDropModule
   ],
-  declarations: [ AppComponent,
-      AppLayoutComponent,
-      SiteLayoutComponent,
-      AppHeaderComponent,
-      SiteHeaderComponent,
-      AppFooterComponent,
-      AppSidebarComponent,
-      SiteFooterComponent,
-      LoginComponent,
-      DashboardComponent,
-      HomeComponent,
-      AboutComponent,
-      RegisterComponent,
-      ProfileComponent,
-      NotFoundComponent,
-	  AlertComponent
+  declarations: [AppComponent,
+    AppLayoutComponent,
+    SiteLayoutComponent,
+    AppHeaderComponent,
+    SiteHeaderComponent,
+    AppFooterComponent,
+    AppSidebarComponent,
+    SiteFooterComponent,
+    LoginComponent,
+    DashboardComponent,
+    HomeComponent,
+    AboutComponent,
+    RegisterComponent,
+    ProfileComponent,
+    NotFoundComponent,
+    AlertComponent,
+    CounterComponent,
+    NetworkComponent,
+    CanvasComponent,
+    ElementComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -58,7 +76,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
 
     // provider used to create fake backend
     fakeBackendProvider
-],
-  bootstrap:    [ AppComponent ]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

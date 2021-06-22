@@ -1,0 +1,9 @@
+<div class="dd_icon" cdkDragBoundary=".dd_area" [cdkDragFreeDragPosition]="{x:endpoint.xpos,y:endpoint.ypos}"
+  cdkDrag (cdkDragEnded)="dragEndedOuter($event)">
+  <div id="circleDiv_{{endpoint.guiuuid}}" title="" class="circle">
+    <div id="iconDiv_{{endpoint.guiuuid}}" class="iconclassname" [ngClass]="endpoint.iconclass" cdkDrag [cdkDragFreeDragPosition]="dragPosition"
+      (cdkDragEnded)="dragEndedInner($event)" (cdkDragMoved)="dragMovedInner($event)">
+    </div>
+  </div>
+  <p title="{{endpoint.endpointname}}">{{endpoint.endpointname}}</p>
+</div>

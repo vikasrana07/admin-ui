@@ -11,37 +11,39 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NetworkComponent } from './network/network.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
-    // Site routes goes here
-    {
-        path: '',
-        component: SiteLayoutComponent,
-        children: [
-          { path: '', component: HomeComponent, pathMatch: 'full'},
-          { path: 'about', component: AboutComponent },
-          { path: 'test/:id', component: AboutComponent }
-        ]
-    },
-    // App routes goes here here
-    {
-        path: '',
-        component: AppLayoutComponent,
-        children: [
-          { path: 'dashboard', component: DashboardComponent },
-          { path: 'profile', component: ProfileComponent }
-        ],
-        canActivate: [ AuthGuard ]
-    },
+  // Site routes goes here
+  {
+    path: '',
+    component: SiteLayoutComponent,
+    children: [
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'about', component: AboutComponent },
+      { path: 'test/:id', component: AboutComponent }
+    ]
+  },
+  // App routes goes here here
+  {
+    path: '',
+    component: AppLayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'network', component: NetworkComponent },
+      { path: 'profile', component: ProfileComponent }
+    ],
+    canActivate: [AuthGuard]
+  },
 
-    // no layout routes
-    { path: 'login', component: LoginComponent},
-    { path: 'register', component: RegisterComponent },
-    { path: '404', component: NotFoundComponent},
-    // otherwise redirect to 404
-    { path: '**', redirectTo: '/404' }
+  // no layout routes
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: '404', component: NotFoundComponent },
+  // otherwise redirect to 404
+  { path: '**', redirectTo: '/404' }
 ];
 
 @NgModule({
