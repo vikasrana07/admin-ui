@@ -10,6 +10,7 @@
 .dd_wrapper .dd_area .dd_icon {
     position: absolute;
     width: 65px;
+    z-index: 9;
 }
 
 .dd_wrapper .dd_area .dd_icon .circle {
@@ -42,10 +43,31 @@
     width: 122px;
 }
 
-.cdk-drop-dragging .cdk-drag {
-    transition: transform 500ms cubic-bezier(0, 0, 0.2, 1);
+.dd_wrapper .dd_area .dd_info {
+  position: absolute;
+  width: 50px;
 }
-
-.cdk-drag-animating {
-    transition: transform 550ms cubic-bezier(0, 0, 0.2, 1);
+.dd_wrapper .dd_area .dd_info .count {
+  color: #ffffff;
+  font-size: 12px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  border-radius: 20px;
+  text-align: center;
+  line-height: 27px;
+  cursor: pointer;
+  border: 2px solid;
+}
+.dd_wrapper .dd_area .dd_info .count.grey {
+  background-color: #aaaaaa;
+  border-color: #aaaaaa;
+}
+.dd_wrapper .dd_area .dd_info .count.red {
+  background-color: #d93923;
+  border-color: #d93923;
+}
+.dd_wrapper .dd_area .dd_info .count.green {
+  background-color: #aad200;
+  border-color: #aad200;
 }

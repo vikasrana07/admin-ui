@@ -3,7 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {
+  NgxUiLoaderModule,
+  NgxUiLoaderConfig,
+  SPINNER,
+  POSITION,
+  PB_DIRECTION,
+} from 'ngx-ui-loader';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers';
@@ -31,6 +37,17 @@ import { CounterComponent } from './widget/counter/counter.component';
 import { NetworkComponent } from './network/network.component';
 import { CanvasComponent } from './_components/canvas/canvas.component';
 import { ElementComponent } from './_components/canvas/element/element.component';
+import { DragDropDirective } from './_directives/drag-drop.directive';
+import { LinkComponent } from './_components/canvas/link/link.component';
+
+
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsSize: 20,
+  bgsType: SPINNER.rectangleBounce,
+  fgsType: SPINNER.threeStrings,
+  pbDirection: PB_DIRECTION.leftToRight,
+  pbThickness: 5
+};
 
 @NgModule({
   imports: [
@@ -47,7 +64,7 @@ import { ElementComponent } from './_components/canvas/element/element.component
        */
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
-    DragDropModule
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   declarations: [AppComponent,
     AppLayoutComponent,
@@ -68,7 +85,9 @@ import { ElementComponent } from './_components/canvas/element/element.component
     CounterComponent,
     NetworkComponent,
     CanvasComponent,
-    ElementComponent
+    ElementComponent,
+    DragDropDirective,
+    LinkComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

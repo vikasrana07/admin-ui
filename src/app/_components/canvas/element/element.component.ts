@@ -1,46 +1,45 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { CdkDragEnd, CdkDragDrop, CdkDragMove, CdkDragEnter, CdkDragExit} from '@angular/cdk/drag-drop';
-
-
 @Component({
   selector: 'app-element',
   templateUrl: './element.component.html',
   styleUrls: ['./element.component.css']
 })
 export class ElementComponent implements OnInit {
-  dragPosition = {x: 0, y: 0};
   @Input() endpoint: any;
+  @Output() dragMoveOuter = new EventEmitter();
   @Output() dragEndOuter = new EventEmitter();
   @Output() dragMoveInner = new EventEmitter();
   @Output() dragEndInner = new EventEmitter();
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.endpoint);
+
   }
-  
-  dragEndedOuter(event: CdkDragEnd){
+
+  dragMovedInner(endpoint, position) {
     const data: any = {};
-    data.endpoint = this.endpoint;
-    data.event = event;
+    data.endpoint = endpoint;
+    data.position = position;
+    this.dragMoveInner.emit(data);
+  }
+  dragEndedOuter(endpoint, position) {
+    const data: any = {};
+    data.endpoint = endpoint;
+    data.position = position;
     this.dragEndOuter.emit(data);
   }
 
-  dragMovedInner(event: CdkDragMove) {
+  dragMovedOuter(endpoint, position) {
     const data: any = {};
-    data.endpoint = this.endpoint;
-    data.event = event;
-    this.dragMoveInner.emit(data);
+    data.endpoint = endpoint;
+    data.position = position;
+    this.dragMoveOuter.emit(data);
   }
-  dragEndedInner(event: CdkDragEnd){
+  dragEndedInner(endpoint, position) {
     const data: any = {};
-    data.endpoint = this.endpoint;
-    data.event = event;
-    this.dragPosition = {x: 0, y: 0};
+    data.endpoint = endpoint;
+    data.position = position;
     this.dragEndInner.emit(data);
-  }
-  dropped(event: any) {
-    console.log(event);
   }
 }

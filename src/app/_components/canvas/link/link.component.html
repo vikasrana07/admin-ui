@@ -1,0 +1,11 @@
+<div id="{{link.id}}" *ngIf="link.showDrafted" [style.left.px]="link.xpos" [style.top.px]="link.ypos" class="dd_info">
+  <!--<div class="link hide"></div>-->
+  <!--  <div ng-class="link.isLoading?'loading':''"></div>
+  <div ng-show="link.chartshow" class="chart"></div>
+  <div ng-show="link.deployedFlowArr | isProtectionEnabled:link.color" class="protection protection_tooltip">
+    <span class="protection_text">
+      One or more flows is protected, please click on the dot for more linkrmation
+    </span>
+  </div> -->
+  <div class="count {{link.color}}" draggable-flow-circle>{{ link.flowCount }}</div>
+</div>
