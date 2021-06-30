@@ -33,16 +33,15 @@ export class CanvasComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.line.x1 = 0;
     this.line.y1 = 0;
     this.line.x2 = 0;
     this.line.y2 = 0;
-    this.loaderService.start();
-    this.getEndpointAndLinks();
+    // this.getEndpointAndLinks();
   }
-  onDragMovedInner(data: any) {
-    let pos = data.position;
+  onDragMovedInner(data: any): void {
+    const pos = data.position;
     this.line.x1 = data.endpoint.xpos + 30;
     this.line.y1 = data.endpoint.ypos + 30;
     this.line.x2 = pos.left + this.line.x1 + 10;
@@ -50,7 +49,7 @@ export class CanvasComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  onDragMovedOuter(data: any) {
+  onDragMovedOuter(data: any): void {
     /* const index = this.canvasService.getEndpointIndexByGuiId(this.endpoints, data.endpoint.guiuuid);
     if (index !== -1) {
       this.endpoints[index].xpos = data.endpoint.xpos;
@@ -60,7 +59,7 @@ export class CanvasComponent implements OnInit {
     this.onDragEndedOuter(data);
     this.cdr.detectChanges();
   }
-  onDragEndedOuter(data: any) {
+  onDragEndedOuter(data: any): void {
     const idInObj = this.getEndPointIndexFromArr(data.endpoint.guiuuid);
     const len = this.endpoints[idInObj].connectionLineId.length;
 
@@ -74,16 +73,20 @@ export class CanvasComponent implements OnInit {
       $(flowId).removeClass('hide');
       $(lFlowId).removeClass('hide');
       $(rFlowId).removeClass('hide');
+      // tslint:disable-next-line: max-line-length
       this.updateLineObject(data.endpoint.guiuuid, this.endpoints[idInObj].attachedEndPoints[i], this.endpoints[idInObj].connectionLineId[i]);
       this.cdr.detectChanges();
     }
-
-
   }
-
-  updateLineObject(source, destination, id) {
+  trackByEndpoint(index: number, el: any): number {
+    return el.guilinkuuid;
+  }
+  trackByLink(index: number, el: any): number {
+    return el.guilinkuuid;
+  }
+  updateLineObject(source: string, destination: string, id: string): void {
     try {
-      const linkObjRefId = this.getLinkIndexFromArr(id)
+      const linkObjRefId = this.getLinkIndexFromArr(id);
 
       const tempStrCenter = this.addFlowNumberInfoInBetween(source, destination, 'center');
       this.links[linkObjRefId].centerObj.xpos = tempStrCenter.split('::')[0] + 'px';
@@ -99,7 +102,7 @@ export class CanvasComponent implements OnInit {
       this.links[linkObjRefId].rightObj.xpos = tempStrRight.split('::')[0] + 'px';
       this.links[linkObjRefId].rightObj.ypos = tempStrRight.split('::')[1] + 'px';
 
-    } catch (e) { console.log(e) }
+    } catch (e) { console.log(e); }
 
   }
 
@@ -114,7 +117,7 @@ export class CanvasComponent implements OnInit {
     let divideFactorYG;
     let divideFactorYL;
     try {
-      var networkDivRef = $('#canvas');
+      const networkDivRef = $('#canvas');
       if (dir === 'center') {
         divideFactor = 2;
         divideFactorYG = 2;
@@ -154,14 +157,14 @@ export class CanvasComponent implements OnInit {
       } else {
         pointToAddY = (outDivRefTo.top - outDivRefFrom.top) / divideFactorYL + (outDivRefFrom.top - networkDivRef.offset().top) + 25;
       }
-      var rotationDegreTop = outDivRefFrom.top - outDivRefTo.top;
-      var rotationDegreLeft = outDivRefFrom.left - outDivRefTo.left;
-      degree = Math.atan2(rotationDegreTop, rotationDegreLeft) * (180 / Math.PI)
+      const rotationDegreTop = outDivRefFrom.top - outDivRefTo.top;
+      const rotationDegreLeft = outDivRefFrom.left - outDivRefTo.left;
+      degree = Math.atan2(rotationDegreTop, rotationDegreLeft) * (180 / Math.PI);
     }
     catch (e) { }
     return pointToAddX + '::' + pointToAddY + '::' + degree;
   }
-  onDragEndedInner() {
+  onDragEndedInner(): void {
     this.line.x1 = 0;
     this.line.y1 = 0;
     this.line.x2 = 0;
@@ -169,7 +172,8 @@ export class CanvasComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  getEndpointAndLinks() {
+  getEndpointAndLinks(): void {
+    this.loaderService.start();
     this.httpService.get('23e965da-5d2a-438e-b343-9f22a3e84f9e').subscribe(
       data => {
         const response = this.canvasService.parseEndpointsAndLinks(data);
@@ -187,13 +191,13 @@ export class CanvasComponent implements OnInit {
       });
   }
 
-  drawLinks() {
+  drawLinks(): void {
     try {
       for (let s = 0; s < this.links.length; s++) {
         this.checkIfDraftAndFailedInfoShown(s);
       }
-      for (let i = 0; i < this.endpoints.length; i++) {
-        this.checkIfLineToBeDrawFromPToP(this.endpoints[i].guiuuid);
+      for (const endpoint of this.endpoints) {
+        this.checkIfLineToBeDrawFromPToP(endpoint.guiuuid);
       }
       this.loaderService.stop();
 
@@ -201,18 +205,18 @@ export class CanvasComponent implements OnInit {
       console.log(e);
     }
   }
-  //check and start creating a line between two endpoints if there is a connection
-  checkIfLineToBeDrawFromPToP(guiuuid: string) {
+  // check and start creating a line between two endpoints if there is a connection
+  checkIfLineToBeDrawFromPToP(guiuuid: string): void {
     if (guiuuid) {
       const idInObj = this.getEndPointIndexFromArr(guiuuid);
       for (let i = 0; i < this.endpoints[idInObj].attachedEndPoints.length; i++) {
-        this.drawLineFromParentToParent(guiuuid, this.endpoints[idInObj].attachedEndPoints[i], i)
+        this.drawLineFromParentToParent(guiuuid, this.endpoints[idInObj].attachedEndPoints[i], i);
       }
       this.cdr.detectChanges();
     }
   }
 
-  getSVGLinkIndexFromArr(id: string) {
+  getSVGLinkIndexFromArr(id: string): number {
     let numToReturn = -1;
     for (let i = 0; i < this.svgLines.length; i++) {
       if (this.svgLines[i].id === id) {
@@ -222,7 +226,7 @@ export class CanvasComponent implements OnInit {
     }
     return numToReturn;
   }
-  drawLineOnDrag(data) {
+  drawLineOnDrag(data: any): void {
     const pos = data.position;
     for (let i = 0; i < data.endpoint.connectionLineId.length; i++) {
       const linkRefId = this.getSVGLinkIndexFromArr(data.endpoint.connectionLineId[i]);
@@ -237,8 +241,8 @@ export class CanvasComponent implements OnInit {
       };
     }
   }
-  //draw a line between parent to parent
-  drawLineFromParentToParent(lineFrom: string, lineTo: string, loopval: number) {
+  // draw a line between parent to parent
+  drawLineFromParentToParent(lineFrom: string, lineTo: string, loopval: number): void {
     try {
 
       const sourceIndex = this.getEndPointIndexFromArr(lineFrom);
@@ -270,7 +274,7 @@ export class CanvasComponent implements OnInit {
     }
   }
 
-  getLinkIndexFromArr(id: string) {
+  getLinkIndexFromArr(id: string): number {
     let numToReturn = -1;
     for (let i = 0; i < this.links.length; i++) {
       if (this.links[i].connectionLineId.split('_')[1] === id.split('_')[1]) {
@@ -280,7 +284,7 @@ export class CanvasComponent implements OnInit {
     }
     return numToReturn;
   }
-  getEndPointIndexFromArr(guiuuid: string) {
+  getEndPointIndexFromArr(guiuuid: string): number {
     let numToReturn = -1;
     for (let i = 0; i < this.endpoints.length; i++) {
       if (this.endpoints[i].guiuuid === guiuuid) {

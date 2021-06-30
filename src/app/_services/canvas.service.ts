@@ -23,7 +23,7 @@ export class CanvasService {
         private httpService: HttpService,
     ) { }
 
-    parseEndpointsAndLinks(response: any) {
+    parseEndpointsAndLinks(response: any): any {
         this.connectionId = 0;
         this.endpoints = [];
         this.links = [];
@@ -41,8 +41,8 @@ export class CanvasService {
     compareEndPoints() {
         /* Add shared vports to endpoints object */
         if (this.sharedVportsFromTTMS.length) {
-            for (let i = 0; i < this.sharedVportsFromTTMS.length; i++) {
-                this.endPointsFromTTMS.push({ endpoint_uuid: this.sharedVportsFromTTMS[i], vports: [] });
+            for (const vport of this.sharedVportsFromTTMS) {
+                this.endPointsFromTTMS.push({ endpoint_uuid: vport, vports: [] });
             }
         }
 
@@ -53,11 +53,11 @@ export class CanvasService {
         this.endPointsToBeDrawn = [];
 
         for (let i = 0; i < ttmLen; i++) {
-            var itemFound = false;
+            let itemFound = false;
             for (let j = 0; j < guiLen; j++) {
                 if (this.endPointsFromGUI[j].type != null) {
-                    if (this.endPointsFromGUI[j].type.toLowerCase() == 'eep') {
-                        if (this.endPointsFromTTMS[i].endpoint_uuid == this.endPointsFromGUI[j].vport_uuid) {
+                    if (this.endPointsFromGUI[j].type.toLowerCase() === 'eep') {
+                        if (this.endPointsFromTTMS[i].endpoint_uuid === this.endPointsFromGUI[j].vport_uuid) {
                             this.endPointsFromGUI[j].statusObj = 'old';
                             this.endPointsToBeDrawn[this.endPointsToBeDrawn.length] = this.endPointsFromGUI[j];
                             itemFound = true;
@@ -65,7 +65,7 @@ export class CanvasService {
                         }
                     }
                     else {
-                        if (this.endPointsFromTTMS[i].endpoint_uuid == this.endPointsFromGUI[j].endpoint_uuid) {
+                        if (this.endPointsFromTTMS[i].endpoint_uuid === this.endPointsFromGUI[j].endpoint_uuid) {
                             this.endPointsFromGUI[j].statusObj = 'old';
                             this.endPointsToBeDrawn[this.endPointsToBeDrawn.length] = this.endPointsFromGUI[j]
                             itemFound = true;
@@ -98,7 +98,7 @@ export class CanvasService {
                     }
                 }
                 if (itemFound === false) {
-                    if ((this.endPointsFromGUI[i].endpoint_uuid == '' || this.endPointsFromGUI[i].endpoint_uuid == null) && (this.endPointsFromGUI[i].type.toLowerCase() == 'dia' || this.endPointsFromGUI[i].type.toLowerCase() == 'ipvpn' || this.endPointsFromGUI[i].type.toLowerCase() == 'vnf' || this.endPointsFromGUI[i].type.toLowerCase() == 'cp' || this.endPointsFromGUI[i].type.toLowerCase() == 'ucpe')) {
+                    if ((this.endPointsFromGUI[i].endpoint_uuid === '' || this.endPointsFromGUI[i].endpoint_uuid === null) && (this.endPointsFromGUI[i].type.toLowerCase() == 'dia' || this.endPointsFromGUI[i].type.toLowerCase() == 'ipvpn' || this.endPointsFromGUI[i].type.toLowerCase() == 'vnf' || this.endPointsFromGUI[i].type.toLowerCase() == 'cp' || this.endPointsFromGUI[i].type.toLowerCase() == 'ucpe')) {
                         this.endPointsFromGUI[i].statusObj = 'old';
                         this.endPointsToBeDrawn[this.endPointsToBeDrawn.length] = this.endPointsFromGUI[i];
 
@@ -111,7 +111,7 @@ export class CanvasService {
         this.createEndpointsArray();
     }
 
-    createEndpointsArray() {
+    createEndpointsArray(): void {
         const showLoaderForEndpoints = ['rep', 'vnf'];
         const arrLen = this.endPointsToBeDrawn.length;
         for (let i = 0; i < arrLen; i++) {
@@ -134,8 +134,8 @@ export class CanvasService {
                 isLoading: false,
                 attachedEndPoints: [],
                 connectionLineId: [],
-                xpos: parseInt(arr[i].xpos),
-                ypos: parseInt(arr[i].ypos)
+                xpos: parseInt(arr[i].xpos, 10),
+                ypos: parseInt(arr[i].ypos, 10)
             }
             if (showLoaderForEndpoints.indexOf(endpoint.type) !== -1) {
                 endpoint.isLoading = true;
@@ -143,13 +143,13 @@ export class CanvasService {
             this.endpoints.push(endpoint);
         }
     }
-    drawLinks() {
+    drawLinks(): void {
 
-        let GUILinkLen = this.linksFromGUI.length;
+        const GUILinkLen = this.linksFromGUI.length;
         for (let j = 0; j < GUILinkLen; j++) {
             if (this.linksFromGUI[j].link_uuid == null) {
                 if (this.linksFromGUI[j].status === '25' || this.linksFromGUI[j].status === '30') {
-                    this.linksFromGUI[j].status = 'Failed'
+                    this.linksFromGUI[j].status = 'Failed';
                 } else {
                     this.linksFromGUI[j].status = 'Pending';
                 }
@@ -164,40 +164,40 @@ export class CanvasService {
         this.checkIfTheLinksDeployed();
     }
 
-    getLinkData(links, linkid) {
+    getLinkData(links: any, linkid: string): any {
         let linkObj: any = {};
         if (links.length) {
-            for (let index = 0; index < links.length; index++) {
-                if (links[index].linkid === linkid) {
-                    linkObj = links[index];
+            for (const link of links) {
+                if (link.linkid === linkid) {
+                    linkObj = link;
                     break;
                 }
             }
         }
         return linkObj;
     }
-    checkIfTheLinksDeployed() {
-        var jsonObj: any = {};
-        var linksToCheckArr = [];
-        for (var i = 0; i < this.linksFromTTMS.length; i++) {
-            linksToCheckArr.push({ linkid: this.linksFromTTMS[i].linkid });
+    checkIfTheLinksDeployed(): any {
+        const jsonObj: any = {};
+        const linksToCheckArr = [];
+        for (const link of this.linksFromTTMS) {
+            linksToCheckArr.push({ linkid: link.linkid });
         }
         if (linksToCheckArr.length) {
             jsonObj.links = linksToCheckArr;
             this.httpService.get('86251759-72bf-4604-bd50-50e8afe9a897').subscribe(
                 data => {
-                    let linksResponse = data.links;
-                    for (var i = 0; i < this.linksFromTTMS.length; i++) {
-                        var linkData = this.getLinkData(linksResponse, this.linksFromTTMS[i].linkid);
+                    const linksResponse = data.links;
+                    for (let i = 0; i < this.linksFromTTMS.length; i++) {
+                        let linkData = this.getLinkData(linksResponse, this.linksFromTTMS[i].linkid);
                         if (linkData === -1) {
                             linkData = {
-                                'linkid': this.linksFromTTMS[i].linkid,
-                                'status': 'failed',
-                                'isProtected': false
+                                linkid: this.linksFromTTMS[i].linkid,
+                                status: 'failed',
+                                isProtected: false
                             }
                         }
                         this.linksFromTTMS[i].isProtected = linkData.isProtected;
-                        var linkStatus = (linkData.status).toLowerCase();
+                        const linkStatus = (linkData.status).toLowerCase();
                         this.linksFromTTMS[i].status = linkStatus;
                         if (linkStatus === 'active') {
                             this.linksFromTTMS[i].status = 'deployed';
@@ -222,15 +222,15 @@ export class CanvasService {
         }
 
     }
-    createLinkObjectForGUILinks(id, guilinkuuid) {
-        var gui_ep_uuidArr = this.linksFromGUI[id].gui_ep_uuids.split(',');
-        var newEntryOrNot = this.checkIfLinkBetweenTheseEndPointExists(gui_ep_uuidArr);
+    createLinkObjectForGUILinks(id: number, guilinkuuid: string): any {
+        const guiEPUUIDArr = this.linksFromGUI[id].gui_ep_uuids.split(',');
+        const newEntryOrNot = this.checkIfLinkBetweenTheseEndPointExists(guiEPUUIDArr);
         this.currentZorderForddInfo = this.currentZorderForddInfo + 1;
         if (newEntryOrNot === -1) {
-            const draggedRef = 'outerdiv_' + gui_ep_uuidArr[0];
-            const droppedRef = 'outerdiv_' + gui_ep_uuidArr[1];
-            const draggedId = gui_ep_uuidArr[0];
-            const droppedId = gui_ep_uuidArr[1];
+            const draggedRef = 'outerdiv_' + guiEPUUIDArr[0];
+            const droppedRef = 'outerdiv_' + guiEPUUIDArr[1];
+            const draggedId = guiEPUUIDArr[0];
+            const droppedId = guiEPUUIDArr[1];
             const connectionId = 'flow_' + this.connectionId;
             this.connectionId++;
             // tslint:disable-next-line: one-variable-per-declaration
@@ -275,7 +275,7 @@ export class CanvasService {
             const linkObj: any = {};
             linkObj.guilinkuuid = guilinkuuid;
             linkObj.connectionLineId = connectionId;
-            linkObj.connectionBetweenArr = gui_ep_uuidArr;
+            linkObj.connectionBetweenArr = guiEPUUIDArr;
             linkObj.aEndPointId = draggedRef;
             linkObj.zEndPointId = droppedRef;
             linkObj.draggedId = draggedId;
@@ -290,24 +290,21 @@ export class CanvasService {
                 linkObj.drawFlowArr = [];
                 linkObj.deployFlowArr = [];
                 linkObj.flowIdInDB = [this.linksFromGUI[id].gui_link_uuid];
-
                 linkObj.statusInDB = ['fail'];
-
             } else {
                 linkObj.flowBetweenArr = [this.linksFromGUI[id].gui_link_uuid];
                 linkObj.failedFlowsArr = [];
                 linkObj.drawFlowArr = [this.linksFromGUI[id].gui_link_uuid];
                 linkObj.deployFlowArr = [];
                 linkObj.flowIdInDB = [this.linksFromGUI[id].gui_link_uuid];
-
                 linkObj.statusInDB = ['save'];
             }
-            this.addEntryInStageEndPoint(gui_ep_uuidArr, connectionId);
+            this.addEntryInStageEndPoint(guiEPUUIDArr, connectionId);
 
             this.links[this.links.length] = linkObj;
         } else {
-            let arrRef = this.links[newEntryOrNot];
-            if (this.linksFromGUI[id].status.toLowerCase() == 'failed') {
+            const arrRef = this.links[newEntryOrNot];
+            if (this.linksFromGUI[id].status.toLowerCase() === 'failed') {
                 arrRef.flowBetweenArr[arrRef.flowBetweenArr.length] = this.linksFromGUI[id].gui_link_uuid;
                 arrRef.failedFlowsArr[arrRef.failedFlowsArr.length] = this.linksFromGUI[id].gui_link_uuid;
                 arrRef.flowIdInDB[arrRef.flowIdInDB.length] = this.linksFromGUI[id].gui_link_uuid;
@@ -324,15 +321,15 @@ export class CanvasService {
 
     }
 
-    createLinkObjectForTTMSLinks(id) {
+    createLinkObjectForTTMSLinks(id): any {
 
-        var linkId = this.linksFromTTMS[id].linkid;
-        var isProtected = this.linksFromTTMS[id].isProtected;
+        const linkId = this.linksFromTTMS[id].linkid;
+        const isProtected = this.linksFromTTMS[id].isProtected;
 
-        var GUIIDSource = '';
-        var GUIIDDest = '';
-        var endPointIdSource = this.getEndPointFromVport(this.linksFromTTMS[id].vport[0]);
-        var endPointIdDestination = this.getEndPointFromVport(this.linksFromTTMS[id].vport[1]);
+        let GUIIDSource = '';
+        let GUIIDDest = '';
+        let endPointIdSource = this.getEndPointFromVport(this.linksFromTTMS[id].vport[0]);
+        let endPointIdDestination = this.getEndPointFromVport(this.linksFromTTMS[id].vport[1]);
 
         if (endPointIdSource === -1) {
             GUIIDSource = this.getGUIUUIDFromEndPointId(this.linksFromTTMS[id].vport[0]);
@@ -349,12 +346,12 @@ export class CanvasService {
             GUIIDDest = this.getGUIUUIDFromEndPointId(endPointIdDestination);
         }
 
-        var draggedRef = 'outerdiv_' + GUIIDSource;
-        var droppedRef = 'outerdiv_' + GUIIDDest;
-        var draggedId = GUIIDSource;
-        var droppedId = GUIIDDest;
-        var newEntryOrNot = this.checkIfLinkBetweenTheseEndPointExists([GUIIDSource, GUIIDDest]);
-        var localLinkId = this.getLinkUUIDFromGUIDB(linkId)
+        const draggedRef = 'outerdiv_' + GUIIDSource;
+        const droppedRef = 'outerdiv_' + GUIIDDest;
+        const draggedId = GUIIDSource;
+        const droppedId = GUIIDDest;
+        const newEntryOrNot = this.checkIfLinkBetweenTheseEndPointExists([GUIIDSource, GUIIDDest]);
+        let localLinkId = this.getLinkUUIDFromGUIDB(linkId)
         if (localLinkId === '') {
             localLinkId = linkId;
         }
@@ -362,7 +359,9 @@ export class CanvasService {
         if (newEntryOrNot === -1) {
             const connectionId = 'flow_' + this.connectionId;
             this.connectionId++;
-            let cObj, lObj, rObj;
+            let cObj: any;
+            let lObj: any;
+            let rObj: any;
             cObj = {};
             cObj.id = 'center_' + connectionId.split('_')[1];
             cObj.xpos = 0;
@@ -427,7 +426,7 @@ export class CanvasService {
 
         } else {
             const arrRef = this.links[newEntryOrNot];
-            arrRef.flowBetweenArr[arrRef.flowBetweenArr.length] = localLinkId
+            arrRef.flowBetweenArr[arrRef.flowBetweenArr.length] = localLinkId;
             const obj: any = {};
             obj.gui_link_uuid = localLinkId;
             obj.link_uuid = linkId;
@@ -438,7 +437,7 @@ export class CanvasService {
         }
     }
 
-    getGUIUUIDFromEndPointId(epId) {
+    getGUIUUIDFromEndPointId(epId): any {
         let guiId = '';
         for (let k = 0; k < this.endpoints.length; k++) {
             var idToCheck = '';
@@ -454,18 +453,17 @@ export class CanvasService {
         }
         return guiId;
     }
-    getLinkUUIDFromGUIDB(linkuuid) {
+    getLinkUUIDFromGUIDB(linkuuid: string): string {
         let idToReturn = '';
-        for (let s = 0; s < this.linksFromGUI.length; s++) {
-            if (this.linksFromGUI[s].link_uuid === linkuuid) {
-                idToReturn = this.linksFromGUI[s].gui_link_uuid;
+        for (const link of this.linksFromGUI) {
+            if (link.link_uuid === linkuuid) {
+                idToReturn = link.gui_link_uuid;
                 break;
             }
         }
-
         return idToReturn;
     }
-    getEndPointFromVport(vport) {
+    getEndPointFromVport(vport: string): any {
         let epToReturn = -1;
         for (let k = 0; k < this.endPointsFromTTMS.length; k++) {
             for (let s = 0; s < this.endPointsFromTTMS[k].vports.length; s++) {
@@ -478,7 +476,7 @@ export class CanvasService {
 
         return epToReturn;
     }
-    addEntryInStageEndPoint(epArr, flowId) {
+    addEntryInStageEndPoint(epArr, flowId): any {
 
         for (let i = 0; i < this.endpoints.length; i++) {
 
@@ -532,14 +530,14 @@ export class CanvasService {
         }
 
     }
-    checkIfLinkBetweenTheseEndPointExists(gui_ep_uuidArr) {
+    checkIfLinkBetweenTheseEndPointExists(guiEPUUIDArr): any {
         let valToReturn = -1;
         for (let k = 0; k < this.links.length; k++) {
             const revArr = new Array();
             revArr[0] = this.links[k].connectionBetweenArr[1];
             revArr[1] = this.links[k].connectionBetweenArr[0];
 
-            if (gui_ep_uuidArr.toString() == this.links[k].connectionBetweenArr.toString() || gui_ep_uuidArr.toString() == revArr.toString()) {
+            if (guiEPUUIDArr.toString() == this.links[k].connectionBetweenArr.toString() || guiEPUUIDArr.toString() == revArr.toString()) {
                 valToReturn = k;
                 break;
             }
@@ -547,7 +545,7 @@ export class CanvasService {
         return valToReturn;
 
     }
-    isEndpointExistsOnCanvas(id) {
+    isEndpointExistsOnCanvas(id): any {
         let isFound = false;
         if (this.endpoints) {
             for (const row of this.endpoints) {
@@ -559,7 +557,7 @@ export class CanvasService {
         }
         return isFound;
     }
-    getEndpointByGuiId(endpoints, guiuuid) {
+    getEndpointByGuiId(endpoints, guiuuid): any {
         let endpoint: any = {};
         if (endpoints && endpoints.length) {
             for (const row of this.endpoints) {
@@ -571,7 +569,7 @@ export class CanvasService {
         }
         return endpoint;
     }
-    getEndpointIndexByGuiId(endpoints, guiuuid) {
+    getEndpointIndexByGuiId(endpoints, guiuuid): any {
         let index = -1;
         if (endpoints && endpoints.length) {
             for (let i = 0; i < this.endpoints.length; i++) {

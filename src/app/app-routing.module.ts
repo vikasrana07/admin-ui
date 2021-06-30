@@ -11,6 +11,7 @@ import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InventoryComponent } from './inventory/inventory.component';
 import { NetworkComponent } from './network/network.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './notfound/notfound.component';
@@ -32,6 +33,7 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'inventory', component: InventoryComponent },
       { path: 'network', component: NetworkComponent },
       { path: 'profile', component: ProfileComponent }
     ],

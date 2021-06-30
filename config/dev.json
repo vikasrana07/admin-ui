@@ -1,0 +1,17 @@
+{
+  "dev": {
+    "name": "Project Name - Dev Mode",
+    "port": 4100,
+    "mode": "development",
+    "protocol": "http",
+    "serverUrl": "localhost",
+    "serverUrlWebUrlLink": "https://staging-penapi.pn.telstra.com/",
+    "database": {
+      "multipleStatements": true,
+      "host": "",
+      "user": "",
+      "password": "",
+      "database": ""
+    }
+  }
+}

@@ -1,3 +1,13 @@
 a{
 	cursor: pointer;
 }
+
+.content-container {
+  position: relative;
+}
+.scroll-container {
+  position: relative;
+}
+.ngx-overlay >.ngx-loading-text{
+	font-size:12px!important;
+}

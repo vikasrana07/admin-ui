@@ -1,11 +1,11 @@
 <div class="dd_wrapper">
   <div id="canvas" class="dd_area">
-    <app-element [endpoint]="endpoint" *ngFor="let endpoint of endpoints" appDragDrop
+    <app-element [endpoint]="endpoint" *ngFor="let endpoint of endpoints;trackBy: trackByEndpoint" appDragDrop
       (dragMoveOuter)="onDragMovedOuter($event)" (dragEndOuter)="onDragEndedOuter($event)"
       (dragMoveInner)="onDragMovedInner($event)" (dragEndInner)="onDragEndedInner($event)"></app-element>
-    <app-link [link]="link.leftObj" *ngFor="let link of links"></app-link>
-    <app-link [link]="link.centerObj" *ngFor="let link of links"></app-link>
-    <app-link [link]="link.rightObj" *ngFor="let link of links"></app-link>
+    <app-link [link]="link.leftObj" *ngFor="let link of links;trackBy: trackByLink"></app-link>
+    <app-link [link]="link.centerObj" *ngFor="let link of links;trackBy: trackByLink"></app-link>
+    <app-link [link]="link.rightObj" *ngFor="let link of links;trackBy: trackByLink"></app-link>
 
     <svg #svgLine style="width:100%;height:100%;">
       <line id="svg_line" [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2"

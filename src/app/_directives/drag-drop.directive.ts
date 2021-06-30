@@ -11,7 +11,7 @@ export class DragDropDirective implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.ngZone.runOutsideAngular(() => {
       const element = $(this.el.nativeElement);
       const iconDiv = element.find('.iconclassname');

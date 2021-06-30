@@ -24,7 +24,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css"
             ],
             "scripts": [
 			  "src/assets/js/feather.min.js",

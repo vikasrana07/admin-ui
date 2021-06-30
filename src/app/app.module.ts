@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { ToastrModule } from 'ngx-toastr';
+import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
   SPINNER,
-  POSITION,
   PB_DIRECTION,
 } from 'ngx-ui-loader';
 
@@ -24,21 +28,20 @@ import { SiteHeaderComponent } from './_layout/site-header/site-header.component
 import { SiteFooterComponent } from './_layout/site-footer/site-footer.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { NetworkComponent } from './network/network.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
-import { AlertComponent } from './_components';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor, ErrorInterceptor } from './_helpers';
 import { NotFoundComponent } from './notfound/notfound.component';
-import { CounterComponent } from './widget/counter/counter.component';
-import { NetworkComponent } from './network/network.component';
-import { CanvasComponent } from './_components/canvas/canvas.component';
-import { ElementComponent } from './_components/canvas/element/element.component';
+import { CanvasComponent, ElementComponent, LinkComponent, CounterComponent } from './_components';
+
 import { DragDropDirective } from './_directives/drag-drop.directive';
-import { LinkComponent } from './_components/canvas/link/link.component';
+
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -46,25 +49,32 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsType: SPINNER.rectangleBounce,
   fgsType: SPINNER.threeStrings,
   pbDirection: PB_DIRECTION.leftToRight,
-  pbThickness: 5
+  pbThickness: 5,
+  text: 'Please wait...',
+  gap: 10
 };
 
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  wheelPropagation: true
+};
 @NgModule({
   imports: [
     BrowserModule,
+    CommonModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     NgxEchartsModule.forRoot({
-      /**
-       * This will import all modules from echarts.
-       * If you only need custom modules,
-       * please refer to [Custom Build] section.
-       */
-      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+      echarts: () => import('echarts')
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      preventDuplicates: true,
+    }),
+    PerfectScrollbarModule
   ],
   declarations: [AppComponent,
     AppLayoutComponent,
@@ -81,18 +91,18 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RegisterComponent,
     ProfileComponent,
     NotFoundComponent,
-    AlertComponent,
     CounterComponent,
     NetworkComponent,
     CanvasComponent,
     ElementComponent,
     DragDropDirective,
-    LinkComponent
+    LinkComponent,
+    InventoryComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     // provider used to create fake backend
     fakeBackendProvider
   ],

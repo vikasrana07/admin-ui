@@ -17,26 +17,26 @@ export class ElementComponent implements OnInit {
 
   }
 
-  dragMovedInner(endpoint, position) {
+  dragMovedInner(endpoint: any, position: any): void {
     const data: any = {};
     data.endpoint = endpoint;
     data.position = position;
     this.dragMoveInner.emit(data);
   }
-  dragEndedOuter(endpoint, position) {
+  dragEndedOuter(endpoint: any, position: any): void {
     const data: any = {};
     data.endpoint = endpoint;
     data.position = position;
     this.dragEndOuter.emit(data);
   }
 
-  dragMovedOuter(endpoint, position) {
+  dragMovedOuter(endpoint: any, position: any): void {
     const data: any = {};
     data.endpoint = endpoint;
     data.position = position;
     this.dragMoveOuter.emit(data);
   }
-  dragEndedInner(endpoint, position) {
+  dragEndedInner(endpoint: any, position: any): void {
     const data: any = {};
     data.endpoint = endpoint;
     data.position = position;
