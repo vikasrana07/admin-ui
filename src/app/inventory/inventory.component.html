@@ -22,8 +22,71 @@
           </div>
         </div>
       </div>
-      <div class="table-responsive">
-        <table class="table table-hover mb-0">
+      <div>
+        <p-table [value]="endpoints" [paginator]="true" [rows]="10" [loading]="loading" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[10,25,50]">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="endpointuuid">Endpoint UUID <p-sortIcon field="endpointuuid"></p-sortIcon>
+              </th>
+              <th pSortableColumn="datacentercode">Location <p-sortIcon field="datacentercode"></p-sortIcon>
+              </th>
+              <th pSortableColumn="status">Status
+                <p-sortIcon field="status"></p-sortIcon>
+              </th>
+              <th pSortableColumn="createdon">Creation Date <p-sortIcon field="createdon"></p-sortIcon>
+              </th>
+              <th class="pt-0">
+                <p>Action</p>
+              </th>
+            </tr>
+            <tr>
+              <th>
+                <p-columnFilter type="text" field="endpointuuid"></p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter type="text" field="datacentercode"></p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
+                  <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                    <p-dropdown [ngModel]="value" [options]="statuses" placeholder="Any" [showClear]="true">
+                      <ng-template let-option pTemplate="item">
+                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
+                      </ng-template>
+                    </p-dropdown>
+                  </ng-template>
+                </p-columnFilter>
+              </th>
+              <th>
+                <p-columnFilter type="text" field="createdon"></p-columnFilter>
+              </th>
+              <th>
+
+              </th>
+          </ng-template>
+          <ng-template pTemplate="body" let-endpoint>
+            <tr>
+              <td>{{endpoint.endpointuuid}}</td>
+              <td>{{endpoint.datacentercode}}</td>
+              <td><span class="badge badge-danger">{{endpoint.status}}</span></td>
+              <td>{{endpoint.createdon}}</td>
+              <td><button class="btn p-0" type="button" id="dropdownMenuButton7" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
+                </button></td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+            <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+            <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+          </ng-template>
+        </p-table>
+        <!-- <table class="table table-hover mb-0">
           <thead>
             <tr>
               <th class="pt-0">#</th>
@@ -122,7 +185,7 @@
                 </button></td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
       </div>
     </div>
   </div>

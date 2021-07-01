@@ -1,13 +1,23 @@
-a{
-	cursor: pointer;
+html,
+body {
+  height: 100%;
 }
-
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+a {
+  cursor: pointer;
+}
 .content-container {
   position: relative;
 }
 .scroll-container {
   position: relative;
 }
-.ngx-overlay >.ngx-loading-text{
-	font-size:12px!important;
+.ngx-overlay > .ngx-loading-text {
+  font-size: 12px !important;
+}
+.p-datatable .p-sortable-column:focus {
+  box-shadow: none !important;
 }

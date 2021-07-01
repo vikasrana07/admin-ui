@@ -11,57 +11,57 @@
           <div class="table-row content-container">
             <div class="table-col" id="locations" [@widthGrowFunction]="popFunction.functionState">
               <h1><span>Functions</span></h1>
-              <perfect-scrollbar class="scroll-container">
-                <ul>
-                  <li class="icon_pop" title="PoP">
-                    <span class="anchor" (click)="onSelectPOP()">PoP </span>
-                  </li>
-                  <li class="icon_exchange" title="Global Exchange">
-                    <span class="anchor">Global
-                      Exchange </span>
-                  <li class="icon_vnf" title="Marketplace">
-                    <span class="anchor">Marketplace
-                    </span>
-                  </li>
-                </ul>
-              </perfect-scrollbar>
+              <!-- <perfect-scrollbar class="scroll-container"> -->
+              <ul>
+                <li class="icon_pop" title="PoP">
+                  <span class="anchor" (click)="onSelectPOP()">PoP </span>
+                </li>
+                <li class="icon_exchange" title="Global Exchange">
+                  <span class="anchor">Global
+                    Exchange </span>
+                <li class="icon_vnf" title="Marketplace">
+                  <span class="anchor">Marketplace
+                  </span>
+                </li>
+              </ul>
+              <!-- </perfect-scrollbar> -->
             </div>
             <div class="table-col" id="pops" *ngIf="popFunction.showLocations" [@widthGrowPOP]="popFunction.popState">
               <h1>POPS</h1>
-              <perfect-scrollbar class="scroll-container">
-                <ul>
-                  <li title="Japan (JTHA)" class="icon_pop" (click)="onSelectLocation('210')"><span
-                      class="anchor ng-binding">Japan (JTHA)</span></li>
-                  <li title="HKGG (HKGG)" class="icon_pop"><span class="anchor ng-binding">HKGG (HKGG)</span></li>
-                  <li title="sgpl (SGPL)" class="icon_pop"><span class="anchor ng-binding">sgpl (SGPL)</span></li>
-                  <li title="HKCK (HKCK)" class="icon_pop"><span class="anchor ng-binding">HKCK (HKCK)</span></li>
-                  <li title="SYLP (SYLP)" class="icon_pop"><span class="anchor ng-binding">SYLP (SYLP)</span></li>
-                  <li title="Japan (UNSE)" class="icon_pop"><span class="anchor ng-binding">Japan (UNSE)</span></li>
-                  <li title="JapanTest (UNST)" class="icon_pop"><span class="anchor ng-binding">JapanTest(UNST)</span>
-                  </li>
-                  <li title="Telstra_San_Test (PITS)" class="icon_pop"><span class="anchor ng-binding">Telstra_San_Test
-                      (PITS)</span></li>
-                  <li title="SiriUSdc (DCSIR)" class="icon_pop"><span class="anchor ng-binding">SiriUSdc (DCSIR)</span>
-                  </li>
-                  <li title="dc2 (DC2)" class="icon_pop"><span class="anchor ng-binding">dc2 (DC2)</span></li>
-                </ul>
-              </perfect-scrollbar>
+              <!-- <perfect-scrollbar class="scroll-container"> -->
+              <ul>
+                <li title="Japan (JTHA)" class="icon_pop" (click)="onSelectLocation('210')"><span
+                    class="anchor ng-binding">Japan (JTHA)</span></li>
+                <li title="HKGG (HKGG)" class="icon_pop"><span class="anchor ng-binding">HKGG (HKGG)</span></li>
+                <li title="sgpl (SGPL)" class="icon_pop"><span class="anchor ng-binding">sgpl (SGPL)</span></li>
+                <li title="HKCK (HKCK)" class="icon_pop"><span class="anchor ng-binding">HKCK (HKCK)</span></li>
+                <li title="SYLP (SYLP)" class="icon_pop"><span class="anchor ng-binding">SYLP (SYLP)</span></li>
+                <li title="Japan (UNSE)" class="icon_pop"><span class="anchor ng-binding">Japan (UNSE)</span></li>
+                <li title="JapanTest (UNST)" class="icon_pop"><span class="anchor ng-binding">JapanTest(UNST)</span>
+                </li>
+                <li title="Telstra_San_Test (PITS)" class="icon_pop"><span class="anchor ng-binding">Telstra_San_Test
+                    (PITS)</span></li>
+                <li title="SiriUSdc (DCSIR)" class="icon_pop"><span class="anchor ng-binding">SiriUSdc (DCSIR)</span>
+                </li>
+                <li title="dc2 (DC2)" class="icon_pop"><span class="anchor ng-binding">dc2 (DC2)</span></li>
+              </ul>
+              <!-- </perfect-scrollbar> -->
             </div>
             <div class="table-col" id="ports" *ngIf="popFunction.showEndpoints"
               [@widthGrowEndpoint]="popFunction.endpointState">
               <h1>Endpoints</h1>
-              <perfect-scrollbar class="scroll-container">
-                <ul class="table_checkbox">
-                  <li title="4c2d3f7a-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
-                      class="anchor ng-binding">4c2d3f7a-d8ac-11eb-b8bc-0242ac130003</span></li>
-                  <li title="4c2d41c8-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
-                      class="anchor ng-binding">4c2d41c8-d8ac-11eb-b8bc-0242ac130003</span></li>
-                  <li title="4c2d42c2-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
-                      class="anchor ng-binding">4c2d42c2-d8ac-11eb-b8bc-0242ac130003</span></li>
-                  <li title="4c2d4394-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
-                      class="anchor ng-binding">4c2d4394-d8ac-11eb-b8bc-0242ac130003</span></li>
-                </ul>
-              </perfect-scrollbar>
+              <!-- <perfect-scrollbar class="scroll-container"> -->
+              <ul class="table_checkbox">
+                <li title="4c2d3f7a-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
+                    class="anchor ng-binding">4c2d3f7a-d8ac-11eb-b8bc-0242ac130003</span></li>
+                <li title="4c2d41c8-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
+                    class="anchor ng-binding">4c2d41c8-d8ac-11eb-b8bc-0242ac130003</span></li>
+                <li title="4c2d42c2-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
+                    class="anchor ng-binding">4c2d42c2-d8ac-11eb-b8bc-0242ac130003</span></li>
+                <li title="4c2d4394-d8ac-11eb-b8bc-0242ac130003" class="icon_pop"><span
+                    class="anchor ng-binding">4c2d4394-d8ac-11eb-b8bc-0242ac130003</span></li>
+              </ul>
+              <!-- </perfect-scrollbar> -->
             </div>
             <div class="table-col hide" id="selected-ports">
               <h1>Summary</h1>

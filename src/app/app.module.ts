@@ -5,9 +5,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ToastrModule } from 'ngx-toastr';
-import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
+// import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
+import { CalendarModule } from 'primeng/calendar';
+import { SliderModule } from 'primeng/slider';
+import { MenuModule } from 'primeng/menu';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ContextMenuModule } from 'primeng/contextmenu';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { InputTextModule } from 'primeng/inputtext';
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
@@ -42,8 +52,6 @@ import { CanvasComponent, ElementComponent, LinkComponent, CounterComponent } fr
 
 import { DragDropDirective } from './_directives/drag-drop.directive';
 
-
-
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsSize: 20,
   bgsType: SPINNER.rectangleBounce,
@@ -54,9 +62,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   gap: 10
 };
 
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+/* const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true
-};
+}; */
 @NgModule({
   imports: [
     BrowserModule,
@@ -70,11 +78,20 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       echarts: () => import('echarts')
     }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      preventDuplicates: true,
-    }),
-    PerfectScrollbarModule
+    //PerfectScrollbarModule,
+    TableModule,
+    ToastModule,
+    CalendarModule,
+    SliderModule,
+    ToastModule,
+    MenuModule,
+    MultiSelectModule,
+    ContextMenuModule,
+    DialogModule,
+    ButtonModule,
+    DropdownModule,
+    ProgressBarModule,
+    InputTextModule
   ],
   declarations: [AppComponent,
     AppLayoutComponent,
@@ -102,7 +119,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
+    // { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     // provider used to create fake backend
     fakeBackendProvider
   ],
