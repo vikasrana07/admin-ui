@@ -7,7 +7,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
 // import { PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
 import { MenuModule } from 'primeng/menu';
@@ -18,6 +17,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { ToastModule } from 'primeng/toast';
 import {
   NgxUiLoaderModule,
   NgxUiLoaderConfig,
@@ -51,6 +52,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
 import { CanvasComponent, ElementComponent, LinkComponent, CounterComponent } from './_components';
 
 import { DragDropDirective } from './_directives/drag-drop.directive';
+import { MessageService } from 'primeng/api';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsSize: 20,
@@ -80,10 +82,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     //PerfectScrollbarModule,
     TableModule,
-    ToastModule,
     CalendarModule,
     SliderModule,
-    ToastModule,
     MenuModule,
     MultiSelectModule,
     ContextMenuModule,
@@ -91,7 +91,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    MessageModule,
+    ToastModule,
   ],
   declarations: [AppComponent,
     AppLayoutComponent,
@@ -121,7 +123,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     // provider used to create fake backend
-    fakeBackendProvider
+    fakeBackendProvider,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

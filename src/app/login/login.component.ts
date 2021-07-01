@@ -31,16 +31,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
 
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/dashboard';
   }
-  get formControls() { return this.loginForm.controls; }
+  get formControls(): any { return this.loginForm.controls; }
 
   login(): void {
     this.isSubmitted = true;
